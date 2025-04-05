@@ -24,6 +24,16 @@ namespace ORM_Dapper.Data
             _connection.Execute("INSERT INTO products (ProductID, Name, Price, CategoryID, OnSale, StockLevel) Values (@ProductID, @Name, @Price, @CategoryID, @OnSale, @StockLevel);", new { ProductID, Name, Price, CategoryID, OnSale, StockLevel });
         }
 
+        public void UpdateProduct(int ProductID, string Name, double Price, int CategoryID, bool OnSale, int StockLevel)
+        {
+            _connection.Execute("UPDATE products SET Name = @Name, Price = @Price, CategoryID = @CategoryID, OnSale = @OnSale, StockLevel = @StockLevel WHERE ProductID = @ProductID;", new { ProductID, Name, Price, CategoryID, OnSale, StockLevel });
+        }
+
+        public void DeleteProduct(int ProductID)
+        {
+            _connection.Execute("DELETE FROM products WHERE ProductID = @ProductID;", new { ProductID });
+        }
+
         public IEnumerable<Products> GetAllProducts()
         {
             return _connection.Query<Products>("SELECT * FROM products;");
